@@ -3,7 +3,8 @@
 from jsonpath import jsonpath
 
 import random
-from test_wanitku.api.baseapi import BaseApi
+
+from api.baseapi import BaseApi
 
 class TestZhangjielianxi(BaseApi):
     def test_GetSpecialIntelligenceTree(self):

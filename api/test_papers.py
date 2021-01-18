@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from test_wanitku.api.baseapi import BaseApi
 import random
-from jsonpath import jsonpath
+from api.baseapi import BaseApi
 class Test_Papers(BaseApi):
     def test_getpapaerlist(self):
         req = {
