@@ -1,0 +1,5 @@
+list1 = [[3139486695, 3139486696, 3139486697, 3139486698, 3139486699, 3139486700, 3139486701, 3139486702]
+想要的数据格式：
+data = {"Answers":[{"QuestionId":3139135481,"AnswerDuration":19230,"Options":"C"},{"QuestionId":3139135482,"AnswerDuration":2,"Options":"B"},{"QuestionId":3139135483,"AnswerDuration":1,"Options":"B"},{"QuestionId":3139135484,"AnswerDuration":0,"Options":""},{"QuestionId":3139135485,"AnswerDuration":0,"Options":""},{"QuestionId":3139135486,"AnswerDuration":0,"Options":""},{"QuestionId":3139135487,"AnswerDuration":0,"Options":""},{"QuestionId":3139135488,"AnswerDuration":0,"Options":""},{"QuestionId":3139135489,"AnswerDuration":0,"Options":""},{"QuestionId":3139135490,"AnswerDuration":0,"Options":""},{"QuestionId":3139135491,"AnswerDuration":0,"Options":""},{"QuestionId":3139135492,"AnswerDuration":0,"Options":""},{"QuestionId":3139135493,"AnswerDuration":0,"Options":""},{"QuestionId":3139135494,"AnswerDuration":0,"Options":""},{"QuestionId":3139135495,"AnswerDuration":0,"Options":""}]}
+问题：我能从上一个接口得到list1 ，下一个接口需要传数据data
+已知QuestionId的值是list1,AnswerDuration和Options可以写成固定值，怎么拼写数据data
