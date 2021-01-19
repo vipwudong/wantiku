@@ -11,12 +11,7 @@ class TestZhangjielianxi(BaseApi):
         req = {
             "method": "get",
             "url": self.host + "/api/question/GetSpecialIntelligenceTree?",
-            "headers": {"SubjectId": "436",
-                        "UserId": "6648816",
-                        "SubjectParentId": "435",
-                        "PackageId": "1",
-                        "Token": "20210115135342-ec41f8dc0cd97c2822534678894671f4"
-                        }
+            "headers":self.headers
         }
         r = self.send_requests(req)
         print(r.json())
@@ -62,4 +57,3 @@ class TestZhangjielianxi(BaseApi):
          print(r.json())
          self.SavePaperQueueId = r.json()["SavePaperQueueId"]
          print(self.SavePaperQueueId)
-         #
