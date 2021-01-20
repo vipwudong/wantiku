@@ -11,65 +11,68 @@ class Papers(BaseApi):
             "headers": self.headers
         }
         self.r = self.send_requests(req)
-        self.paperId =  self.r.json()["EntityList"][0]["PaperId"]
-    def getpapers(self):
-        self.getpapaerlist()
+        self.paperId =self.r.json()["EntityList"][0]["PaperId"]
+        return self.paperId
+    def getpapers(self,paperId):
         req = {
             "method": "get",
-            "url":self.host + f"/api/question/Paper?paperId={self.paperId}&userExamPaperId=0",
+            "url":self.host + f"/api/question/Paper?paperId={paperId}&userExamPaperId=0",
             "headers": self.headers
         }
-        self.r = self.send_requests(req)
-        r1 =  self.r.json()["PaperEntity"]["TKQuestionsBasicEntityList"][0]["QuestionsEntityList"]
-        questionList = [];#定义一个空数组
+        r = self.send_requests(req)
+        return r.json()
+
+    def savepaper(self, paper):
+        paperId = paper["PaperEntity"]["PaperId"]
+        r1 = paper["PaperEntity"]["TKQuestionsBasicEntityList"][0]["QuestionsEntityList"]
+        questionList = [];  # 定义一个空数组
         for q in r1:
-            answers = q["QuestionContentKeyValue"]#生成选项列表
-            totalCount = len(answers)#试题选项个数
+            answers = q["QuestionContentKeyValue"]  # 生成选项列表
+            totalCount = len(answers)  # 试题选项个数
             idx = random.randint(0, totalCount - 1)
             # print(idx)
             # print(totalCount)
             # print(answers[idx]);
-            answerKey = answers[idx]["Key"]#随机取某个选项
+            answerKey = answers[idx]["Key"]  # 随机取某个选项
             item = {"QuestionId": q["QuestionId"], "AnswerDuration": random.randint(0, 100), "Options": answerKey}
             questionList.append(item)
-        self.data = {"Answers": questionList, "paperid": self.paperId, "IsCheckinRewards": False, "isSavePaper": 1}
-    def savepaper(self):
-        self.getpapers()
+        data = {"Answers": questionList, "paperid": paperId, "IsCheckinRewards": False, "isSavePaper": 1}
         req = {
             "method": "post",
             "url":self.host + "/API/report/SaveUserPaperWithQueue?",
-            "json":self.data
+            "json":data,
+            "headers":self.headers
+
         }
-        self.r = self.send_requests(req)
-        self.savepaperqid = self.r.json()["SavePaperQueueId"]
-        print(self.r.json())
-        print(self.savepaperqid)
-    def getuserexampaperid(self):
-        self.savepaper()
+        r = self.send_requests(req)
+        self.savepaperqid = r.json()["SavePaperQueueId"]
+        return self.savepaperqid
+    def getuserexampaperid(self,savepaperqid):
+        savepaperqid = self.savepaperqid
         req ={
             "method":"get",
-            "url":self.host + f"/api/report/GetRealUserExamPaperId?SavePaperQueueId={self.savepaperqid}",
+            "url":self.host + f"/api/report/GetRealUserExamPaperId?SavePaperQueueId={savepaperqid}",
             "headers":self.headers,
         }
         r = self.send_requests(req)
-        assert self.r.json()["Msg"] =="成功"
-        self.userexampaperid = r.json()["UserExamPaperId"]
-        print(self.userexampaperid)
-    def getpaperReport(self):
-        self.getuserexampaperid()
+        assert r.json()["Msg"] =="成功"
+        print(r.json())
+        self.realuserexampaperid = r.json()["UserExamPaperId"]
+        return self.realuserexampaperid
+    def getpaperReport(self,realuserexampaperid):
         req = {
             "method": "get",
-            "url": self.host + f"/api/Report/GetPaperReport?UserExamPaperId={self.userexampaperid}",
+            "url": self.host + f"/api/Report/GetPaperReport?UserExamPaperId={realuserexampaperid}",
             "headers": self.headers,
         }
         r = self.send_requests(req)
         print(r.json())
-    def analysis(self):
-        self.getuserexampaperid()
+    def analysis(self,paperId,realuserexampaperid):
         req = {
             "method": "get",
-            "url":self.host + f"/api/question/Paper?paperId={self.paperId}&userExamPaperId={self.userexampaperid}",
+            "url":self.host + f"/api/question/Paper?paperId={paperId}&userExamPaperId={realuserexampaperid}",
             "headers": self.headers
         }
         self.r = self.send_requests(req)
         print(self.r.json())
+        print(req)

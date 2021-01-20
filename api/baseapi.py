@@ -18,7 +18,7 @@ class BaseApi:
         "UserId": "6648816",
         "Token": "20210115135342-ec41f8dc0cd97c2822534678894671f4"
     }
-    host = "https://weixin.566.com"
+    host = "http://weixin.566.com"
     def send_requests(self, req:dict):#对requests进行二次封装
         """
         req = {
